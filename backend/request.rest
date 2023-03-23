@@ -1,0 +1,16 @@
+POST http://localhost:3333/api/administrador 
+Content-Type: application/json
+
+{
+"nome": "Lia Saad", "cpf": "039.023.091-09", "email": "lia@gmaaail.com", "senha": "123", "salario": 1200.98
+}
+
+###
+
+GET http://localhost:3333/api/administrador
+
+### 
+GET http://localhost:3333/api/administrador/90
+
+### DELETE 
+DELETE http://localhost:3333/api/administrador/4

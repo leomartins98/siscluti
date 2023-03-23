@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:root@localhost:5432/siscluti?schema=public"
+}
+
+model Administrador {
+  idAdm       Int          @id @default(autoincrement())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  nome        String       @db.VarChar(255)
+  cpf         String?      @unique
+  email       String?      @unique
+  senha       String
+  salario     Float
+  Local       Local?
+  Funcionario Funcionario?
+}
+
+model Local {
+  idLocal       Int           @id @default(autoincrement())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  nome          String        @db.VarChar(255)
+  administrador Administrador @relation(fields: [admId], references: [idAdm])
+  admId         Int           @unique
+  Funcionario   Funcionario?
+  Professor     Professor?
+  Aluno         Aluno?
+}
+
+model Funcionario {
+  idFunc        Int           @id @default(autoincrement())
+  localId       Int           @unique
+  nome          String        @db.VarChar(255)
+  admId         Int           @unique
+  cpf           String        @db.VarChar(255)
+  email         String        @unique @db.VarChar(255)
+  senha         String        @db.VarChar(255)
+  salario       Float
+  administrador Administrador @relation(fields: [admId], references: [idAdm])
+  local         Local         @relation(fields: [localId], references: [idLocal])
+  Agendamento   Agendamento?
+}
+
+model Professor {
+  idProf    Int     @id @default(autoincrement())
+  nome      String?
+  horario   Horario @relation(fields: [horarioId], references: [idHorario])
+  horarioId Int     @unique
+  local     Local   @relation(fields: [localId], references: [idLocal])
+  localId   Int     @unique
+  cpf       String?
+  salario   Float
+  Aluno     Aluno?
+}
+
+model Horario {
+  idHorario  Int        @id @default(autoincrement())
+  horaInicio DateTime
+  horaFinal  DateTime
+  professor  Professor?
+}
+
+model Aluno {
+  idAluno     Int          @id @default(autoincrement())
+  armas       Arma[]
+  nome        String?
+  nasc        DateTime
+  local       Local        @relation(fields: [localId], references: [idLocal])
+  localId     Int          @unique
+  professor   Professor    @relation(fields: [profId], references: [idProf])
+  profId      Int          @unique
+  Agendamento Agendamento?
+  Pagamento   Pagamento[]
+}
+
+model Arma {
+  id      Int     @id @default(autoincrement())
+  alunoId Int     @unique
+  nome    String?
+  tipo    String?
+  aluno   Aluno   @relation(fields: [alunoId], references: [idAluno])
+}
+
+model Agendamento {
+  idAgendamento   Int         @id @default(autoincrement())
+  funcId          Int         @unique
+  alunoId         Int         @unique
+  createdAt       DateTime    @default(now())
+  horaAgendamento DateTime
+  aluno           Aluno       @relation(fields: [alunoId], references: [idAluno])
+  funcionario     Funcionario @relation(fields: [funcId], references: [idFunc])
+}
+
+model Pagamento {
+  idPagamento Int     @id @default(autoincrement())
+  tipo        String?
+  alunoId     Int
+  valor       Float
+  aluno       Aluno   @relation(fields: [alunoId], references: [idAluno])
+}
