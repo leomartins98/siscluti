@@ -1,16 +1,13 @@
-POST http://localhost:3333/api/administrador 
+POST http://localhost:3333/api/aluno
 Content-Type: application/json
 
-{
-"nome": "Lia Saad", "cpf": "039.023.091-09", "email": "lia@gmaaail.com", "senha": "123", "salario": 1200.98
-}
+{ "nome": "Kirk Safado", "nasc": "2023-03-23T16:30:00Z", "localId": 1, "professorId": 1}
 
 ###
+GET http://localhost:3333/api/aluno
 
-GET http://localhost:3333/api/administrador
-
-### 
-GET http://localhost:3333/api/administrador/90
+###
+GET http://localhost:3333/api/aluno/4
 
 ### DELETE 
-DELETE http://localhost:3333/api/administrador/4
+DELETE http://localhost:3333/api/aluno/5

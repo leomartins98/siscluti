@@ -7,13 +7,24 @@ const controllerAdministrador = {
     create: async (req, res) => {
         try {
             const data = {
-                nome: req.body.body.nome,
-                cpf: req.body.body.cpf,
-                email: req.body.body.email,
-                senha: req.body.body.senha,
-                salario: parseFloat(req.body.body.salario)
+                nome: req.body.nome,
+                cpf: req.body.cpf,
+                email: req.body.email,
+                senha: req.body.senha,
+                salario: parseFloat(req.body.salario)
             }
+            const data2 = {
+                email: req.body.email,
+                senha: req.body.senha,
+                cargo: 1
+            }
+            const findOne = await prisma.administrador.findUnique({where: {email: data.email}})
+            if (findOne){
+                return res.status(400).json({msg: "E-mail já cadastrado!"})
+            }
+
             const newAdm = await prisma.administrador.create({data})
+            await prisma.pessoa.cretate({data2})
             res.status(201).json({newAdm, msg: "Administrador cadastrado!"})
 
         } catch (error) {
@@ -33,7 +44,7 @@ const controllerAdministrador = {
         }
     },
 
-
+    //Seleciona apenas um ADM
     getOne: async(req, res) => {
         try {
             
@@ -41,7 +52,9 @@ const controllerAdministrador = {
             id = parseInt(id)
             
             const adm = await prisma.administrador.findUnique({where: {idAdm: id}})
-            
+            if (!adm) {
+                return res.status(404).json({})
+            }
             return res.status(200).json(adm)
             
         } catch (error) {
@@ -49,6 +62,7 @@ const controllerAdministrador = {
         }
     },
     
+    //Deleta o ADM
     delete: async(req, res) => {
         try {
             var id = req.params.id

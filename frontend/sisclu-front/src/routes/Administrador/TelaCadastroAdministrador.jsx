@@ -16,7 +16,7 @@ function AdminForm() {
     
     const adm = {nome, email, senha, cpf, salario}
     const res = axios.post('http://localhost:3333/api/administrador', {
-        body: adm
+        ...adm
     }).then(res => alert("Status "+res.status + ": Administrador criado!"))
     .catch(error => alert("ADM não criado. Erro: "+error.msg))
 
