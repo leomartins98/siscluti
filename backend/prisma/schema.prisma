@@ -11,16 +11,16 @@ datasource db {
 }
 
 model Administrador {
-  idAdm       Int          @id @default(autoincrement())
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  nome        String       @db.VarChar(255)
-  cpf         String?      @unique
-  email       String?      @unique
+  idAdm       Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  nome        String        @db.VarChar(255)
+  cpf         String?       @unique
+  email       String?       @unique
   senha       String
   salario     Float
   Local       Local?
-  Funcionario Funcionario?
+  Funcionario Funcionario[]
 }
 
 model Local {
@@ -30,14 +30,14 @@ model Local {
   nome          String        @db.VarChar(255)
   administrador Administrador @relation(fields: [admId], references: [idAdm])
   admId         Int           @unique
-  Funcionario   Funcionario?
-  Professor     Professor?
-  Aluno         Aluno?
+  Funcionario   Funcionario[]
+  Professor     Professor[]
+  Aluno         Aluno[]
 }
 
 model Funcionario {
   idFunc        Int           @id @default(autoincrement())
-  localId       Int           @unique
+  localId       Int
   nome          String        @db.VarChar(255)
   admId         Int           @unique
   cpf           String        @db.VarChar(255)
@@ -46,7 +46,7 @@ model Funcionario {
   salario       Float
   administrador Administrador @relation(fields: [admId], references: [idAdm])
   local         Local         @relation(fields: [localId], references: [idLocal])
-  Agendamento   Agendamento?
+  Agendamento   Agendamento[]
 }
 
 model Professor {
@@ -58,7 +58,7 @@ model Professor {
   localId   Int     @unique
   cpf       String?
   salario   Float
-  Aluno     Aluno?
+  Aluno     Aluno[]
 }
 
 model Horario {
