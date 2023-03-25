@@ -1,13 +1,19 @@
-POST http://localhost:3333/api/aluno
+POST http://localhost:3333/api/horario
 Content-Type: application/json
 
-{ "nome": "Kirk Safado", "nasc": "2023-03-23T16:30:00Z", "localId": 1, "professorId": 1}
+{"horaInicio": "2023-03-25T17:23:51.692564Z", "horaFinal": "2023-03-25T18:23:51.692564Z", "profId": 1}
 
 ###
-GET http://localhost:3333/api/aluno
+GET http://localhost:3333/api/horario
 
 ###
-GET http://localhost:3333/api/aluno/4
+GET http://localhost:3333/api/horario/1
+
+###
+PUT http://localhost:3333/api/horario/1
+Content-Type: application/json
+
+{"horaInicio": "2023-03-25T09:34:51.692564Z", "horaFinal": "2023-03-25T10:23:51.692564Z", "profId": 1}
 
 ### DELETE 
-DELETE http://localhost:3333/api/aluno/5
+DELETE http://localhost:3333/api/horario/1

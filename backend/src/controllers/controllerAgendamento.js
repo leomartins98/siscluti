@@ -47,7 +47,7 @@ const controllerAgendamento = {
             
             const uniqueAgd = await prisma.agendamento.findUnique({where: {idAgendamento: id}})
             if (!uniqueAgd) {
-                return res.status(404).json({})
+                return res.status(404).json({msg: "Agendamento não encontrado!"})
             }
             return res.status(200).json(uniqueAgd)
             
@@ -64,7 +64,7 @@ const controllerAgendamento = {
             const agd = await prisma.agendamento.findUnique({where: {idAgendamento: id}})
             if (!agd) {return res.status(404).json({msg: "Agendamento não encontrado!"})}
             const deletedAgd = await prisma.agendamento.delete({where: {idAgendamento: id}})
-            return res.status(200).json({msg: "Agendamento cancelado"})
+            return res.status(200).json({msg: "Agendamento cancelado!"})
         } catch (err) {
             console.log(err)
         }

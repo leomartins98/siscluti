@@ -8,6 +8,8 @@ router.route('/').get((req, res) => controllerFuncionario.getAll(req, res))
 
 router.route('/:id').get((req, res) => controllerFuncionario.getOne(req, res))
 
+router.route('/:id').put((req, res) => controllerFuncionario.update(req, res))
+
 router.route('/:id').delete((req, res) => controllerFuncionario.delete(req, res))
 
 module.exports = router

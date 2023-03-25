@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:postgres@localhost:5432/siscluti?schema=public"
+  url      = "postgresql://postgres:root@localhost:5432/siscluti?schema=public"
 }
 
 model Administrador {
@@ -39,8 +39,8 @@ model Funcionario {
   idFunc        Int           @id @default(autoincrement())
   localId       Int
   nome          String        @db.VarChar(255)
-  admId         Int           @unique
-  cpf           String        @db.VarChar(255)
+  admId         Int
+  cpf           String        @unique @db.VarChar(255)
   email         String        @unique @db.VarChar(255)
   senha         String        @db.VarChar(255)
   salario       Float
@@ -50,31 +50,31 @@ model Funcionario {
 }
 
 model Professor {
-  idProf    Int     @id @default(autoincrement())
-  nome      String?
-  horario   Horario @relation(fields: [horarioId], references: [idHorario])
-  horarioId Int     @unique
-  local     Local   @relation(fields: [localId], references: [idLocal])
-  localId   Int     
-  cpf       String?
-  salario   Float
-  Aluno     Aluno[]
+  idProf  Int       @id @default(autoincrement())
+  nome    String?
+  local   Local     @relation(fields: [localId], references: [idLocal])
+  localId Int
+  cpf     String?   @unique
+  salario Float
+  Aluno   Aluno[]
+  Horario Horario[]
 }
 
 model Horario {
-  idHorario  Int        @id @default(autoincrement())
-  horaInicio DateTime
-  horaFinal  DateTime
-  professor  Professor?
+  idHorario  Int       @id @default(autoincrement())
+  horaInicio DateTime  @unique
+  horaFinal  DateTime  @unique
+  professor  Professor @relation(fields: [profId], references: [idProf])
+  profId     Int
 }
 
 model Aluno {
   idAluno     Int          @id @default(autoincrement())
   armas       Arma[]
-  nome        String?  @unique
+  nome        String?      @unique
   nasc        DateTime
   local       Local        @relation(fields: [localId], references: [idLocal])
-  localId     Int          
+  localId     Int
   professor   Professor    @relation(fields: [profId], references: [idProf])
   profId      Int
   Agendamento Agendamento?
@@ -83,33 +83,36 @@ model Aluno {
 
 model Arma {
   id      Int     @id @default(autoincrement())
-  alunoId Int     @unique
+  alunoId Int
   nome    String?
   tipo    String?
   aluno   Aluno   @relation(fields: [alunoId], references: [idAluno])
 }
 
 model Agendamento {
-  idAgendamento   Int         @id @default(autoincrement())
-  funcId          Int         @unique
-  alunoId         Int         @unique
-  createdAt       DateTime    @default(now())
-  horaInicioAgendamento DateTime @unique
-  horaTerminoAgendamento DateTime @unique
-  aluno           Aluno       @relation(fields: [alunoId], references: [idAluno])
-  funcionario     Funcionario @relation(fields: [funcId], references: [idFunc])
+  idAgendamento          Int         @id @default(autoincrement())
+  funcId                 Int         @unique
+  alunoId                Int         @unique
+  createdAt              DateTime    @default(now())
+  horaInicioAgendamento  DateTime    @unique
+  horaTerminoAgendamento DateTime    @unique
+  aluno                  Aluno       @relation(fields: [alunoId], references: [idAluno])
+  funcionario            Funcionario @relation(fields: [funcId], references: [idFunc])
 }
 
 model Pagamento {
-  idPagamento Int     @id @default(autoincrement())
+  idPagamento Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   tipo        String?
   alunoId     Int
   valor       Float
-  aluno       Aluno   @relation(fields: [alunoId], references: [idAluno])
+  status      String
+  aluno       Aluno    @relation(fields: [alunoId], references: [idAluno])
 }
 
 model Pessoa {
-  id Int @id @default(autoincrement())
+  id    Int    @id @default(autoincrement())
   email String
   senha String
   cargo Int

@@ -6,7 +6,9 @@ router.route('/').post((req, res) => controllerHorario.create(req, res))
 
 router.route('/').get((req, res) => controllerHorario.getAll(req, res))
 
-router.route('/:id').get((req, res) => controllerHorario.getOne(req, res))
+router.route('/:id').get((req, res) => controllerHorario.gethoursTeacher(req, res))
+
+router.route('/:id').put((req, res) => controllerHorario.update(req, res))
 
 router.route('/:id').delete((req, res) => controllerHorario.delete(req, res))
 

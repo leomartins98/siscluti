@@ -12,7 +12,6 @@ const controllerAluno = {
                 localId: req.body.localId,
                 profId: req.body.professorId
             }
-            console.log(req.body)
             const findOne = await prisma.aluno.findUnique({where: {nome: data.nome}})
             if (findOne) {
                 return res.status(400).json({msg: "Aluno já cadastrado!"})
@@ -51,6 +50,30 @@ const controllerAluno = {
             
         } catch (error) {
            console.log(error) 
+        }
+    },
+
+    //Atualiza o aluno
+    update: async (req, res) => {
+        try {
+
+            const id = parseInt(req.params.id)
+
+            const data = {
+                nome: req.body.nome,
+                nasc: req.body.nasc,
+                localId: req.body.localId,
+                profId: req.body.professorId
+            }
+            const findOne = await prisma.aluno.findUnique({where: {nome: data.nome}})
+            if (!findOne) {
+                return res.status(400).json({msg: "Aluno não encontrado!"})
+            }
+            const newAluno = await prisma.aluno.update({where: {idAluno: id}, data})
+            res.status(201).json({newAluno, msg: "Aluno atualizado com sucesso!"})
+        } catch (error) {
+            console.log(error)
+            res.status(400).json({msg: error})
         }
     },
     

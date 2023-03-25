@@ -18,13 +18,15 @@ const controllerAdministrador = {
                 senha: req.body.senha,
                 cargo: 1
             }
+            
             const findOne = await prisma.administrador.findUnique({where: {email: data.email}})
-            if (findOne){
-                return res.status(400).json({msg: "E-mail já cadastrado!"})
-            }
+            if (findOne){return res.status(400).json({msg: "E-mail já cadastrado!"})}
+            
+            const findCpf = await prisma.administrador.findUnique({where: {cpf: data.cpf}})
+            if (findCpf) {return res.status(400).json({msg: "Cpf já cadastrado!"})}
 
             const newAdm = await prisma.administrador.create({data})
-            await prisma.pessoa.cretate({data2})
+            await prisma.pessoa.create({data2})
             res.status(201).json({newAdm, msg: "Administrador cadastrado!"})
 
         } catch (error) {
@@ -53,7 +55,7 @@ const controllerAdministrador = {
             
             const adm = await prisma.administrador.findUnique({where: {idAdm: id}})
             if (!adm) {
-                return res.status(404).json({})
+                return res.status(404).json({msg: "Administrador não encontrado!"})
             }
             return res.status(200).json(adm)
             
@@ -68,7 +70,7 @@ const controllerAdministrador = {
             var id = req.params.id
             id = parseInt(id)
             const adm = await prisma.administrador.findUnique({where: {idAdm: id}})
-            if (!adm) {return res.status(404).json({msg: "Usuário não encontrado!"})}
+            if (!adm) {return res.status(404).json({msg: "Administrador não encontrado!"})}
             const deletedAdm = await prisma.administrador.delete({where: {idAdm: id}})
             return res.status(200).json({msg: "usuário deletado"})
         } catch (err) {

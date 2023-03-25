@@ -51,6 +51,27 @@ const controllerLocal = {
            console.log(error) 
         }
     },
+
+    update: async (req, res) => {
+        try {
+            const data = {
+                nome: req.body.nome,
+                adm: req.body.adm
+            }
+            
+            const findOne = await prisma.local.findUnique({where: {nome: data.nome}})
+            if (findOne){
+                return res.status(400).json({msg: "Dados já cadastrados!"})
+            }
+
+            const attLocal = await prisma.local.update({where: {nome: data.nome}, data})
+            res.status(201).json({attLocal, msg: "Local atualizado!"})
+
+        } catch (error) {
+            console.log(error)
+            res.status(400).json({msg: "Error: " + error})
+        }
+    },
     
     delete: async(req, res) => {
         try {
@@ -59,7 +80,7 @@ const controllerLocal = {
             const local = await prisma.local.findUnique({where: {idLocal: id}})
             if (!local) {return res.status(404).json({msg: "Local não encontrado!"})}
             const deletedAdm = await prisma.administrador.delete({where: {idAdm: id}})
-            if (deletedAdm) {return res.status(200).json({msg: "usuário deletado"})}
+            if (deletedAdm) {return res.status(200).json({msg: "Local deletado!"})}
         } catch (err) {
             console.log(err)
         }
