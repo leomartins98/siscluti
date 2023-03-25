@@ -54,6 +54,31 @@ const controllerProfessor = {
            console.log(error) 
         }
     },
+
+    update: async (req, res) => {
+        try {
+
+            const id = parseInt(req.params.id)
+
+            const data = {
+                nome: req.body.nome,
+                cpf: req.body.cpf,
+                salario: req.body.salario,
+                horarioId: req.body.horarioId,
+                localId: req.body.localId
+            }
+            const findProf = await prisma.professor.findUnique({where: {idProf: id}})
+            if (!findProf) {return res.status(400).json({msg: "Professor não encontrado"})}
+
+            const attProfessor = await prisma.professor.update({where: {idProf: id}, data})
+
+            res.status(201).json({attProfessor, msg: "Professor atualizado!"})
+
+        } catch (error) {
+            console.log(error)
+            res.status(400).json({error})
+        }
+    },
     
     //Deleta o Professor
     delete: async(req, res) => {
