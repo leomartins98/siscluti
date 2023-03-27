@@ -63,28 +63,6 @@ const controllerHorario = {
                 horaFinal: req.body.horaFinal,
                 profId: req.body.profId
             }
-            
-            const findHoraInicio = await prisma.horario.findMany({
-                where: {
-                    AND: [
-                      {
-                        horaInicio: {
-                          gt: data.horaInicio,
-                        },
-                      },
-                      {
-                        horaFinal: {
-                          lt: data.horaFinal,
-                        },
-                      },
-                    ],
-                },
-              })
-            if (findHoraInicio.length>0){
-                console.log(findHoraInicio)
-                return res.status(400).json({msg: "Horário já preenchido!"})
-                
-            }
 
             id = parseInt(id)
             const updateHorario = await prisma.horario.update({where: {idHorario: id}, data})

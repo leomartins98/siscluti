@@ -39,11 +39,11 @@ const controllerPagamento = {
             var id = req.params.id
             id = parseInt(id)
             
-            const payments = await prisma.pagamento.findMany({where: {alunoId: id, status: "Pendente"}, select: {aluno}})
-            if (!payments) {
+            const payments = await prisma.pagamento.findMany({where: {alunoId: id, status: "Pendente"}, select: {aluno: true}})
+            if (payments.length < 1) {
                 return res.status(404).json({msg: "Não há pagamentos pendentes para esse aluno"})
             }
-            return res.status(200).json(adm)
+            return res.status(200).json(payments)
             
         } catch (error) {
            console.log(error) 
@@ -66,13 +66,14 @@ const controllerPagamento = {
 
     //Atualiza o horário
     update: async(req, res) => {
-        this.attDatePayment()
+        this.attDatePayment
         try {
             var id = req.params.id
             
             const data = {
                 tipo: req.body.tipo,
                 valor: req.body.valor,
+                status: req.body.status
             }
             id = parseInt(id)
             const updatePagamento = await prisma.pagamento.update({where: {idPagamento: id}, data})
@@ -82,7 +83,7 @@ const controllerPagamento = {
         }
     },
     
-    //Deleta o Horário
+    //Altera a pendência do pagamento
     alterPendentPayment: async(req, res) => {
         try {
             var id = req.params.id
@@ -91,6 +92,20 @@ const controllerPagamento = {
             if (!pagamento) {return res.status(404).json({msg: "Pagamento não encontrado!"})}
             const alterarPagamento = await prisma.pagamento.update({where: {idPagamento: id}, data: {status: "Pago"}})
             return res.status(200).json({alterarPagamento, msg: "Pagamento realizado!"})
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    
+    delete: async(req, res) => {
+        try {
+            const id = parseInt(req.params.id)
+            const findPayment = await prisma.pagamento.findUnique({where: {idPagamento: id}})
+            if (!findPayment) {
+                return res.status(404).json({msg: "Pagamento não encontrado!"})
+            }
+            await prisma.pagamento.delete({where: {idPagamento: id}})
+            return res.json({msg: "Pagamento deletado!"})
         } catch (err) {
             console.log(err)
         }

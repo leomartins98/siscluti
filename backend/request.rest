@@ -1,19 +1,19 @@
-POST http://localhost:3333/api/horario
+POST http://localhost:3333/api/professor
 Content-Type: application/json
 
-{"horaInicio": "2023-03-25T17:23:51.692564Z", "horaFinal": "2023-03-25T18:23:51.692564Z", "profId": 1}
+{"nome": "Alexandro", "cpf": "123.456.235-09", "salario": 1098.98, "localId": 1}
 
 ###
-GET http://localhost:3333/api/horario
+GET http://localhost:3333/api/professor
 
 ###
-GET http://localhost:3333/api/horario/1
+GET http://localhost:3333/api/professor/2
 
 ###
-PUT http://localhost:3333/api/horario/1
+PUT http://localhost:3333/api/pagamento/edit/1
 Content-Type: application/json
 
-{"horaInicio": "2023-03-25T09:34:51.692564Z", "horaFinal": "2023-03-25T10:23:51.692564Z", "profId": 1}
+{"status": "Pendente"}
 
 ### DELETE 
-DELETE http://localhost:3333/api/horario/1
+DELETE http://localhost:3333/api/pagamento/1

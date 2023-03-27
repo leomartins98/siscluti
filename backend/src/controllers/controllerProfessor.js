@@ -9,8 +9,7 @@ const controllerProfessor = {
             const data = {
                 nome: req.body.nome,
                 cpf: req.body.cpf,
-                salario: parseFloat(req.body.salario),
-                horarioId: req.body.horarioId,
+                salario: req.body.salario,
                 localId: req.body.localId
             }
             const findCpf = await prisma.professor.findUnique({where: {cpf: data.cpf}})
@@ -64,7 +63,6 @@ const controllerProfessor = {
                 nome: req.body.nome,
                 cpf: req.body.cpf,
                 salario: req.body.salario,
-                horarioId: req.body.horarioId,
                 localId: req.body.localId
             }
             const findProf = await prisma.professor.findUnique({where: {idProf: id}})
