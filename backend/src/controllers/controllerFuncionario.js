@@ -5,15 +5,16 @@ const controllerFuncionario = {
 
     //Criar um novo Funcionário
     create: async (req, res) => {
+        
         try {
             const data = {
-                localId: req.body.localId,      
+                localId: parseInt(req.body.localId),      
                 nome: req.body.nome,
                 admId: req.body.admId,      
                 cpf: req.body.cpf,      
                 email: req.body.email,
                 senha: req.body.senha,    
-                salario: req.body.salario
+                salario: parseFloat(req.body.salario)
             }
             const data2 = {
                 email: req.body.email,
@@ -30,7 +31,9 @@ const controllerFuncionario = {
             if (findCpf) {return res.status(400).json({msg: "CPF já cadastrado!"})}
 
             const newFunc = await prisma.funcionario.create({data})
+
             await prisma.pessoa.create({data: data2})
+            
             res.status(201).json({newFunc, msg: "Funcionário cadastrado!"})
 
         } catch (error) {
@@ -43,7 +46,7 @@ const controllerFuncionario = {
     ///Seleciona todos os Func's
     getAll: async(req, res) => {
         try {
-            const allFuncs = await prisma.funcionario.findMany()
+            const allFuncs = await prisma.funcionario.findMany({include: {local: true, administrador: true}})
             return res.status(200).json(allFuncs)
         } catch (error) {
             console.log(error)

@@ -30,7 +30,7 @@ const controllerLocal = {
     getAll: async(req, res) => {
         try {
             const allLocais = await prisma.local.findMany()
-            return res.status(200).json(allAdms)
+            return res.status(200).json(allLocais)
         } catch (error) {
             console.log(error)
         }

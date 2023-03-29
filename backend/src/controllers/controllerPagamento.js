@@ -14,18 +14,17 @@ const controllerPagamento = {
             }
 
             const newPagamento = await prisma.pagamento.create({data})
-            res.status(201).json({newPagamento, msg: "Pagamento agendado!"})
+            res.status(201).json({newPagamento, msg: "Pagamento realizado!"})
         } catch (error) {
             console.log(error)
             res.status(400).json({msg: error})
         }
     },
 
-
     ///Seleciona todos os pagamentos
     getAll: async(req, res) => {
         try {
-            const allPagamentos = await prisma.pagamento.findMany()
+            const allPagamentos = await prisma.pagamento.findMany({include: {aluno: true}})
             return res.status(200).json(allPagamentos)
         } catch (error) {
             console.log(error)
@@ -39,12 +38,11 @@ const controllerPagamento = {
             var id = req.params.id
             id = parseInt(id)
             
-            const payments = await prisma.pagamento.findMany({where: {alunoId: id, status: "Pendente"}, select: {aluno: true}})
+            const payments = await prisma.pagamento.findMany({where: {alunoId: id, status: "Pendente"}, select: {idPagamento: true, tipo: true, valor: true, aluno: true}})
             if (payments.length < 1) {
                 return res.status(404).json({msg: "Não há pagamentos pendentes para esse aluno"})
             }
             return res.status(200).json(payments)
-            
         } catch (error) {
            console.log(error) 
         }
@@ -64,7 +62,7 @@ const controllerPagamento = {
         }
     },
 
-    //Atualiza o horário
+    //Atualiza o pagamento
     update: async(req, res) => {
         this.attDatePayment
         try {
@@ -72,7 +70,8 @@ const controllerPagamento = {
             
             const data = {
                 tipo: req.body.tipo,
-                valor: req.body.valor,
+                valor: parseFloat(req.body.valor),
+                alunoId: req.body.alunoId,
                 status: req.body.status
             }
             id = parseInt(id)
@@ -88,8 +87,6 @@ const controllerPagamento = {
         try {
             var id = req.params.id
             id = parseInt(id)
-            const pagamento = await prisma.pagamento.findUnique({where: {idPagamento: id, status: "Pendente"}})
-            if (!pagamento) {return res.status(404).json({msg: "Pagamento não encontrado!"})}
             const alterarPagamento = await prisma.pagamento.update({where: {idPagamento: id}, data: {status: "Pago"}})
             return res.status(200).json({alterarPagamento, msg: "Pagamento realizado!"})
         } catch (err) {

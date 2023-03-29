@@ -7,8 +7,8 @@ const controllerArma = {
     create: async (req, res) => {
         try {
             const data = {
-                nome: req.body.nome,
-                alunoId: req.body.alunoId,
+                nome: req.body.nomeArma,
+                alunoId: parseInt(req.body.alunoId),
                 tipo: req.body.tipo,
             }
         

@@ -31,7 +31,7 @@ const controllerAgendamento = {
     ///Seleciona todos os Agendamentos
     getAll: async(req, res) => {
         try {
-            const allAgd = await prisma.agendamento.findMany()
+            const allAgd = await prisma.agendamento.findMany({include: {aluno: true, funcionario: true}})
             return res.status(200).json(allAgd)
         } catch (error) {
             console.log(error)

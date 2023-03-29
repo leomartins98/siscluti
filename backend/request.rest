@@ -1,19 +1,19 @@
-POST http://localhost:3333/api/professor
+POST http://localhost:3333/api/funcionario
 Content-Type: application/json
 
-{"nome": "Alexandro", "cpf": "123.456.235-09", "salario": 1098.98, "localId": 1}
+{"nome": "Alexandro", "email": "1970-01-01T00:00:00.000Z", "senha": 1, "professorId": 1}
 
 ###
-GET http://localhost:3333/api/professor
+GET http://localhost:3333/api/pagamento
 
 ###
-GET http://localhost:3333/api/professor/2
+GET http://localhost:3333/api/pagamento/1
 
 ###
-PUT http://localhost:3333/api/pagamento/edit/1
+PUT http://localhost:3333/api/pagamento/edit/2
 Content-Type: application/json
 
 {"status": "Pendente"}
 
 ### DELETE 
-DELETE http://localhost:3333/api/pagamento/1
+DELETE http://localhost:3333/api/administrador/2

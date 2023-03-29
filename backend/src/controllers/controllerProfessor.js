@@ -9,7 +9,7 @@ const controllerProfessor = {
             const data = {
                 nome: req.body.nome,
                 cpf: req.body.cpf,
-                salario: req.body.salario,
+                salario: parseFloat(req.body.salario),
                 localId: req.body.localId
             }
             const findCpf = await prisma.professor.findUnique({where: {cpf: data.cpf}})
@@ -29,7 +29,7 @@ const controllerProfessor = {
     ///Seleciona todos os ADM's
     getAll: async(req, res) => {
         try {
-            const allProfs = await prisma.professor.findMany()
+            const allProfs = await prisma.professor.findMany({include: {local: true}})
             return res.status(200).json(allProfs)
         } catch (error) {
             console.log(error)
@@ -62,7 +62,7 @@ const controllerProfessor = {
             const data = {
                 nome: req.body.nome,
                 cpf: req.body.cpf,
-                salario: req.body.salario,
+                salario: parseFloat(req.body.salario),
                 localId: req.body.localId
             }
             const findProf = await prisma.professor.findUnique({where: {idProf: id}})
@@ -83,7 +83,7 @@ const controllerProfessor = {
         try {
             var id = req.params.id
             id = parseInt(id)
-            const prof = await prisma.funcionario.findUnique({where: {idProf: id}})
+            const prof = await prisma.professor.findUnique({where: {idProf: id}})
             if (!prof) {return res.status(404).json({msg: "Professor não encontrado!"})}
             const deletedProf = await prisma.professor.delete({where: {idProf: id}})
             return res.status(200).json({msg: "Professor deletado"})

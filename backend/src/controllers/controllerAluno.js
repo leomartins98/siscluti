@@ -9,8 +9,8 @@ const controllerAluno = {
             const data = {
                 nome: req.body.nome,
                 nasc: req.body.nasc,
-                localId: req.body.localId,
-                profId: req.body.professorId
+                localId: parseInt(req.body.localId),
+                profId: parseInt(req.body.professorId)
             }
             const findOne = await prisma.aluno.findUnique({where: {nome: data.nome}})
             if (findOne) {
@@ -28,7 +28,7 @@ const controllerAluno = {
     ///Seleciona todos os Alunos
     getAll: async(req, res) => {
         try {
-            const allAlunos = await prisma.aluno.findMany()
+            const allAlunos = await prisma.aluno.findMany({include: {local: true, professor: true}})
             return res.status(200).json(allAlunos)
         } catch (error) {
             console.log(error)
@@ -44,7 +44,7 @@ const controllerAluno = {
             
             const uniqueAluno = await prisma.aluno.findUnique({where: {idAluno: id}})
             if (!uniqueAluno) {
-                return res.status(404).json({})
+                return res.status(404).json({msg: "Aluno não encontrado!"})
             }
             return res.status(200).json(uniqueAluno)
             
