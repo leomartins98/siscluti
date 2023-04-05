@@ -7,14 +7,20 @@ import {  Funcionario, CadastroFuncionario, UpdateFuncionario, DeleteFuncionario
 import {  Professor, CadastroProfessor, UpdateProfessor, DeleteProfessor } from './pages/Professor';
 import {Agendamento, CadastroAgendamento, UpdateAgendamento, DeleteAgendamento  } from './pages/Agendamento'
 import {Pagamento, SelectPagamento, EditaPagamento, AtualizaPagamento, DeletePagamento} from './pages/Pagamento'
-import 'semantic-ui-css/semantic.min.css'
+import {Arma, AdicionarArma, UpdateArma, DeleteArma} from './pages/Arma'
+import {Login} from './pages/Login'
 
+import { Horario, AdicionarHorario, UpdateHorario, DeleteHorario } from './pages/Horario';
+
+import 'semantic-ui-css/semantic.min.css'
 
 function App() {
   return (
+    
     <Router>
       <Sidebar />
       <Routes>
+        <Route path="/login" element={<Login />} />      
         <Route path="/adm" element={<Administrador />} />
         <Route path='/adm/cadastro' element={<CadastroAdministrador />} />
         <Route path='/adm/update/:id' element={<UpdateAdministrador />} />
@@ -24,7 +30,12 @@ function App() {
         <Route path='/aluno/cadastro' element={<CadastroAluno />} />
         <Route path='/aluno/update/:id' element={<UpdateAluno />} />
         <Route path='/aluno/delete/:id' element={<DeleteAluno />} />
-        <Route path='/aluno/cadastro/armas' element={<CadastroArma /> } /> 
+
+        <Route path='/aluno/:id/armas' element={<Arma /> } />
+        <Route path='/aluno/cadastro/armas' element={<CadastroArma /> } />
+        <Route path='/aluno/adicionar/arma/:id' element={<AdicionarArma /> } />
+        <Route path='/aluno/:idAluno/update/:idArma' element={<UpdateArma /> } />
+        <Route path='/aluno/:idAluno/arma/:id' element={<DeleteArma /> } />        
 
         <Route path='/funcionario' element={<Funcionario />} />
         <Route path='/funcionario/cadastro' element={<CadastroFuncionario />} />
@@ -35,7 +46,11 @@ function App() {
         <Route path='/professor/cadastro' element={<CadastroProfessor />} />
         <Route path='/professor/update/:id' element={<UpdateProfessor />} />
         <Route path='/professor/delete/:id' element={<DeleteProfessor />} />
-        <Route path='/horario/cadastro' element={<CadastroProfessor />} />
+
+        <Route path='/professor/:id/horario' element={<Horario /> } />
+        <Route path='/professor/adicionarhorario/:id' element={<AdicionarHorario />} />
+        <Route path='/professor/:idProf/update/:idHorario' element={<UpdateHorario />} />
+        <Route path='/professor/:idProf/horario/:idHorario' element={<DeleteHorario />} />
 
         <Route path='/agendamento' element={<Agendamento />} />
         <Route path='/agendamento/cadastro' element={<CadastroAgendamento />} />

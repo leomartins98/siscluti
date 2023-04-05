@@ -80,6 +80,9 @@ const navigate = useNavigate()
   );
 }
 
+
+
+
 export const Administrador = () => {
 
   const [adms, setAdms] = useState([]);

@@ -48,11 +48,7 @@ const controllerArma = {
                 id: true,
                 nome: true, 
                 tipo: true,
-                aluno: {
-                    select: {
-                        nome: true
-                    }
-                }
+                aluno: true
                 },
             })
             if (!uniqueAluno) {
@@ -69,7 +65,7 @@ const controllerArma = {
             var id = req.params.id
             
             const data = {
-                nome: req.body.nome,
+                nome: req.body.nomeArma,
                 tipo: req.body.tipo,
             }
 
@@ -81,7 +77,6 @@ const controllerArma = {
         }
     },
     
-    //Deleta o Aluno
     delete: async(req, res) => {
         try {
             var id = req.params.id

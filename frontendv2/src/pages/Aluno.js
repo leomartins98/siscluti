@@ -45,6 +45,7 @@ export const Aluno = () => {
               <Table.Cell>{aluno.professor.nome}</Table.Cell>
               <Table.Cell>{aluno.local.nome}</Table.Cell>
               <Table.Cell textAlign='center'>
+                <Link to={`/aluno/${aluno.idAluno}/armas`}><Button className='ui secundary' text-color='black'>Visualizar Armas</Button></Link>
                 <Link to={`/aluno/update/${aluno.idAluno}`}><Button color="green">Editar</Button></Link>
                 <Link to={`/aluno/delete/${aluno.idAluno}`}><Button color='red'>Deletar</Button></Link></Table.Cell>
             </Table.Row>
@@ -328,7 +329,7 @@ const getLocal = () => {
       const handleSubmit = async () => {
       
         await axios.put(`http://localhost:3333/api/aluno/${id}`, {
-        nome, nasc, profId, localId
+        nome, nasc, profId, localId, idAluno: id
     })
     .then(res => alert("Status "+res.status + ": Aluno atualizado!"))
     .catch(error => alert("Erro ao atualizar aluno. "+error.response.data.msg))
@@ -454,10 +455,10 @@ export const DeleteAluno = () => {
         axios.delete(`http://localhost:3333/api/aluno/${id}`)
         .then(res => {
           alert("Status "+res.status + ". Aluno deletado com sucesso!")
-          navigate('/aluno')})
         .catch(error => alert("Aluno não deletado. Status: "+error.response.data.msg))
   }, [])
 
+  navigate('/aluno')})
 
   return (
     <></>

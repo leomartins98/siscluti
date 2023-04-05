@@ -9,6 +9,7 @@ const agendamentoRouter = require('./agendamento')
 const funcionarioRouter = require('./funcionario')
 const horarioRouter = require('./horario')
 const pagamentoRouter = require('./pagamento')
+const pessoaRouter = require('./pessoa')
 
 router.use('/administrador', admRouter)
 router.use('/local', localRouter)
@@ -19,5 +20,6 @@ router.use('/agendamento', agendamentoRouter)
 router.use('/funcionario', funcionarioRouter)
 router.use('/horario', horarioRouter)
 router.use('/pagamento', pagamentoRouter)
+router.use('/pessoa', pessoaRouter)
 
 module.exports = router

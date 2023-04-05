@@ -7,7 +7,6 @@ app.use(cors())
 
 const routes = require('../routes/router')
 app.use('/api', routes)
-
 app.listen(3333, () => {
     console.log('Porta rodando na porta 3333')
 })

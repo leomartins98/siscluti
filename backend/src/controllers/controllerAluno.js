@@ -60,12 +60,13 @@ const controllerAluno = {
             const id = parseInt(req.params.id)
 
             const data = {
+                idAluno: parseInt(req.body.idAluno),
                 nome: req.body.nome,
                 nasc: req.body.nasc,
                 localId: req.body.localId,
-                profId: req.body.professorId
+                profId: req.body.profId
             }
-            const findOne = await prisma.aluno.findUnique({where: {nome: data.nome}})
+            const findOne = await prisma.aluno.findUnique({where: {idAluno: data.idAluno}})
             if (!findOne) {
                 return res.status(400).json({msg: "Aluno não encontrado!"})
             }

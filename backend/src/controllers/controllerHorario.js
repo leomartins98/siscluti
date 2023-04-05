@@ -9,7 +9,7 @@ const controllerHorario = {
             const data = {
                 horaInicio: req.body.horaInicio,
                 horaFinal: req.body.horaFinal,
-                profId: req.body.profId
+                profId: parseInt(req.body.profId)
             }
 
             const findHoraInicio = await prisma.horario.findUnique({where: {horaInicio: data.horaInicio}})
@@ -28,7 +28,7 @@ const controllerHorario = {
     ///Seleciona todos os Horários
     getAll: async(req, res) => {
         try {
-            const allHorarios = await prisma.horario.findMany()
+            const allHorarios = await prisma.horario.findMany({include: {professor: true}})
             return res.status(200).json(allHorarios)
         } catch (error) {
             console.log(error)
@@ -42,7 +42,7 @@ const controllerHorario = {
             var id = req.params.id
             id = parseInt(id)
             
-            const horarios = await prisma.horario.findMany({where: {profId: id}, select: {horaInicio: true, horaFinal: true}})
+            const horarios = await prisma.horario.findMany({where: {profId: id}, select: {idHorario: true, horaInicio: true, horaFinal: true, professor: true}})
             if (!horarios) {
                 return res.status(404).json({})
             }
@@ -61,7 +61,7 @@ const controllerHorario = {
             const data = {      
                 horaInicio: req.body.horaInicio,      
                 horaFinal: req.body.horaFinal,
-                profId: req.body.profId
+                profId: parseInt(req.body.profId)
             }
 
             id = parseInt(id)

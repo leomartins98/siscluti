@@ -42,8 +42,8 @@ export const Professor = () => {
                 <Table.Cell>{professor.salario}</Table.Cell>
                 <Table.Cell>{professor.local.nome}</Table.Cell>
                 <Table.Cell textAlign='center'>
-                    <Link to={`/horario/cadastro/${professor.idProf}`}><Button color="blue">Adicionar Horário</Button></Link>
-                    <Link to={`/horario/${professor.idProf}`}><Button color="grey">Visualizar Horários</Button></Link>
+                    <Link to={`/professor/adicionarhorario/${professor.idProf}`}><Button color="blue">Adicionar Horário</Button></Link>
+                    <Link to={`/professor/${professor.idProf}/horario`}><Button color="grey">Visualizar Horários</Button></Link>
                 </Table.Cell>
                 <Table.Cell textAlign='center'>
                 <Link to={`/professor/update/${professor.idProf}`}><Button color="green">Editar</Button></Link>

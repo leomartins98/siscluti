@@ -174,8 +174,8 @@ export const Agendamento = () => {
               <Table.Cell>{agendamento.idAgendamento}</Table.Cell>
               <Table.Cell>{agendamento.aluno.nome}</Table.Cell>
               <Table.Cell>{agendamento.funcionario.nome}</Table.Cell>
-              <Table.Cell>{format(parseISO(agendamento.horaInicioAgendamento), "dd/MM/yyyy hh:mm")}</Table.Cell>
-              <Table.Cell>{format(parseISO(agendamento.horaTerminoAgendamento), "dd/MM/yyyy hh:mm")}</Table.Cell>
+              <Table.Cell>{format(parseISO(agendamento.horaInicioAgendamento), "dd/MM/yyyy  --  HH:MM")}</Table.Cell>
+              <Table.Cell>{format(parseISO(agendamento.horaTerminoAgendamento), "dd/MM/yyyy   --  HH:MM")}</Table.Cell>
               <Table.Cell textAlign='center'>
                 <Link to={`/agendamento/update/${agendamento.idAgendamento}`}><Button color="green">Editar</Button></Link>
                 <Link to={`/agendamento/delete/${agendamento.idAgendamento}`}><Button color='red'>Deletar</Button></Link></Table.Cell>

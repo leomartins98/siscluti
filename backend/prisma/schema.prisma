@@ -86,7 +86,7 @@ model Arma {
   alunoId Int
   nome    String?
   tipo    String?
-  aluno   Aluno   @relation(fields: [alunoId], references: [idAluno])
+  aluno   Aluno   @relation(fields: [alunoId], references: [idAluno], onDelete: Cascade)
 }
 
 model Agendamento {
@@ -96,8 +96,8 @@ model Agendamento {
   createdAt              DateTime    @default(now())
   horaInicioAgendamento  DateTime    @unique
   horaTerminoAgendamento DateTime    @unique
-  aluno                  Aluno       @relation(fields: [alunoId], references: [idAluno])
-  funcionario            Funcionario @relation(fields: [funcId], references: [idFunc])
+  aluno                  Aluno       @relation(fields: [alunoId], references: [idAluno], onDelete: Cascade)
+  funcionario            Funcionario @relation(fields: [funcId], references: [idFunc], onDelete: Cascade)
 }
 
 model Pagamento {
@@ -108,7 +108,7 @@ model Pagamento {
   alunoId     Int
   valor       Float
   status      String
-  aluno       Aluno    @relation(fields: [alunoId], references: [idAluno])
+  aluno       Aluno    @relation(fields: [alunoId], references: [idAluno], onDelete: Cascade)
 }
 
 model Pessoa {

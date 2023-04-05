@@ -68,7 +68,7 @@ const controllerAdministrador = {
 
             const attAdm = await prisma.administrador.update({where: {idAdm: id}, data})
 
-            res.status(201).json({attAdm, msg: "Professor atualizado!"})
+            res.status(201).json({attAdm, msg: "Administrador atualizado!"})
 
         } catch (error) {
             console.log(error)
