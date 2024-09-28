@@ -85,9 +85,9 @@ A aplicação estará disponível em http://localhost:3000.
 
 ## 🚀 Funcionalidades Futuras
 
-**Autenticação:** Sistema de login com JWT, garantindo que apenas usuários autenticados possam acessar determinadas funcionalidades.
-**Relatórios:** Adicionar geração de relatórios sobre as atividades do clube, como participação em competições e uso das áreas de tiro.
-**Notificações:** Enviar notificações para os membros sobre eventos e atualizações importantes.
+- **Autenticação:** Sistema de login com JWT, garantindo que apenas usuários autenticados possam acessar determinadas funcionalidades.
+- **Relatórios:** Adicionar geração de relatórios sobre as atividades do clube, como participação em competições e uso das áreas de tiro.
+- **Notificações:** Enviar notificações para os membros sobre eventos e atualizações importantes.
 
 ## 📝 Licença
 Este projeto está licenciado sob a MIT License. Veja o arquivo LICENSE para mais detalhes.
