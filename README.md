@@ -49,6 +49,10 @@ Siga os passos abaixo para rodar o projeto localmente:
    ```bash
     npm install
 
+3. Use o Postgres na porta 5432, e faça uma imagem ou apenas instale o Postgres. Após isso, use o comando do Prisma para criar o banco de dados:
+   ```bash
+    npx prisma migrate deploy
+
 4. Inicie o servidor de desenvolvimento do backend:
    ```bash
     npm run dev
