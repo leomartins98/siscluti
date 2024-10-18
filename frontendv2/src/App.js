@@ -9,8 +9,9 @@ import {Agendamento, CadastroAgendamento, UpdateAgendamento, DeleteAgendamento  
 import {Pagamento, SelectPagamento, EditaPagamento, AtualizaPagamento, DeletePagamento} from './pages/Pagamento'
 import {Arma, AdicionarArma, UpdateArma, DeleteArma} from './pages/Arma'
 import {Login} from './pages/Login'
-
+import ProtectedRoute from './components/ProtectedRoute'
 import { Horario, AdicionarHorario, UpdateHorario, DeleteHorario } from './pages/Horario';
+import { Logout } from './components/Logout';
 
 import 'semantic-ui-css/semantic.min.css'
 
@@ -20,8 +21,11 @@ function App() {
     <Router>
       <Sidebar />
       <Routes>
-        <Route path="/login" element={<Login />} />      
-        <Route path="/adm" element={<Administrador />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
+              
+        <Route path="/adm" element={<ProtectedRoute element={<Administrador />}/>} />
         <Route path='/adm/cadastro' element={<CadastroAdministrador />} />
         <Route path='/adm/update/:id' element={<UpdateAdministrador />} />
         <Route path='/adm/delete/:id' element={<DeleteAdministrador />} />

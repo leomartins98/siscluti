@@ -1,36 +1,39 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Card, Form, Button } from 'semantic-ui-react'
 import axios from 'axios'
-import App from "../App"
-import { redirect, useNavigate } from "react-router-dom"
-import { Administrador } from "./Administrador"
+import { useNavigate } from "react-router-dom"
 
 export const Login = () => {
 
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
-    const [error, setError] = useState('')
     const navigate = useNavigate()
 
     const AutenticaLogin = async() => {
         try {
-            if (!email) {
-                setError('Entre com um e-mail válido!')
+            if (!email || !senha) {
+                alert('Entre com um e-mail válido!')
                 return
             }
     
             const {data:users} = await axios.get('http://localhost:3333/api/pessoa')
               
             for (let i = 0; i < users.length;i++) {
-                if (email == users[i].email && senha == users[i].senha){
-                    if (users[i].cargo == 1) {
-                        return navigate('/adm')
+                if (email === users[i].email && senha === users[i].senha){
+                    if (users[i].cargo === 1) {
+                      localStorage.setItem('token', 'tokenparaadm');
+                      // Redireciona para a página protegida
+                      navigate('/adm');
+                      return navigate('/adm')
                     }
-                }
-            
+                    else {
+                      localStorage.setItem('token', 'tokenparaaluno');
+                      navigate('/aluno');
+                    }
+                } 
             }
-            
-            alert('Usuário ou senha incorretos')
+          
+            alert('Usuário ou senha não encontrados!')
 
     
         } catch (error) {
